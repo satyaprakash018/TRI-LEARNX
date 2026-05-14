@@ -75,7 +75,8 @@ DATABASE_URL=your_database_url
 
 ## 📸 Screenshots
 
-(Add your project screenshots here)
+
+<img width="1341" height="610" alt="Screenshot 2026-05-10 120219" src="https://github.com/user-attachments/assets/c359f5cd-9b4f-4ce8-9763-da29ee5eb68a" />
 
 ---
 
