@@ -1,0 +1,784 @@
+/* =====================================================
+   MOBILE-FIRST BASE STYLES
+===================================================== */
+
+/* =====================================================
+   GLOBAL THEME VARIABLES
+===================================================== */
+:root {
+    --primary: #4e73df;
+    --primary-dark: #224abe;
+    --success: #1cc88a;
+    --success-dark: #13855c;
+    --warning: #f6c23e;
+    --warning-dark: #dda20a;
+    --dark: #212529;
+    --light-bg: #f4f6f9;
+    --card-bg: #ffffff;
+    --radius: 16px;
+    --shadow-soft: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* =====================================================
+   GLOBAL BODY STYLES
+===================================================== */
+body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    background: linear-gradient(120deg, #f4f6f9, #eef2f7);
+    color: #212529;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Containers tighter on mobile */
+.container {
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+/* Cards full-width on mobile */
+.card {
+    margin-bottom: 16px;
+}
+
+/* Buttons mobile-first sizing */
+.btn {
+    padding: 10px 22px;
+    font-size: 15px;
+}
+
+/* Headings smaller on mobile */
+h2 {
+    font-size: 1.4rem;
+}
+h3 {
+    font-size: 1.25rem;
+}
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+.navbar {
+    position: relative;
+    z-index: 1030;
+    border-radius: 0 0 14px 14px;
+    background-color: #212529 !important;
+}
+
+/* =====================================================
+   CARDS
+===================================================== */
+.card {
+    background: var(--card-bg);
+    border: none;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 35px rgba(0,0,0,0.15);
+}
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+.btn {
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-weight: 500;
+    transition: all 0.25s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border: none;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--success), var(--success-dark));
+    border: none;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, var(--warning), var(--warning-dark));
+    border: none;
+    color: #212529;
+}
+
+/* =====================================================
+   ICONS
+===================================================== */
+.bi {
+    transition: transform 0.3s ease;
+}
+
+.card:hover .bi {
+    transform: scale(1.15);
+}
+
+/* =====================================================
+   ALERTS
+===================================================== */
+.alert {
+    border-radius: 14px;
+}
+
+/* =====================================================
+   TABLE (STUDY MATERIALS)
+===================================================== */
+.table {
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f5ff;
+}
+
+/* =====================================================
+   BADGES (ADMIN)
+===================================================== */
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+}
+
+/* =====================================================
+   PAGE FADE ANIMATION
+===================================================== */
+.fade-in {
+    animation: fadeUp 0.8s ease forwards;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+footer {
+    border-radius: 16px 16px 0 0;
+    font-size: 14px;
+}
+
+/* =====================================================
+   MOBILE RESPONSIVE
+===================================================== */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .navbar .btn {
+        padding: 5px 12px;
+        font-size: 13px;
+    }
+}
+
+/* =====================================================
+   SCROLL ANIMATIONS
+===================================================== */
+.scroll-animate {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+}
+
+/* =====================================================
+   BACK TO MATERIALS BUTTON (PREVIEW PAGE)
+===================================================== */
+.back-btn {
+    background: linear-gradient(135deg, #4e73df, #224abe);
+    color: #fff;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 15px rgba(78, 115, 223, 0.4);
+}
+
+.back-btn:hover {
+    color: #fff;
+    transform: translateX(-4px);
+    box-shadow: 0 10px 25px rgba(78, 115, 223, 0.6);
+}
+
+.scroll-animate.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ================================
+   ADMIN UPLOAD EQUAL HEIGHT FIX
+================================ */
+
+.admin-upload-card {
+    height: 100%;
+    min-height: 520px;      /* same frame height */
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-upload-form {
+    flex: 1;
+    overflow-y: auto;       /* internal scroll if needed */
+    padding-right: 4px;
+}
+
+/* Optional: nicer scrollbar */
+.admin-upload-form::-webkit-scrollbar {
+    width: 6px;
+}
+.admin-upload-form::-webkit-scrollbar-thumb {
+    background: #ced4da;
+    border-radius: 10px;
+}
+
+
+
+/* =====================================================
+   ENHANCED CARD STYLES - INDUSTRIAL DESIGN
+===================================================== */
+
+/* Welcome Card */
+.welcome-card {
+    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+    border: none;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+}
+
+.welcome-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.welcome-header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 32px;
+}
+
+.welcome-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.welcome-header p {
+    font-size: 0.95rem;
+    opacity: 0.95;
+    margin: 0;
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Feature Cards */
+.feature-card {
+    border: none;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.feature-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+}
+
+.feature-card-header {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card-primary .feature-card-header {
+    background: linear-gradient(135deg, #4e73df 0%, #4e73df 50%, #5b7ff0 100%);
+}
+
+.feature-card-success .feature-card-header {
+    background: linear-gradient(135deg, #1cc88a 0%, #1cc88a 50%, #2ad9a6 100%);
+}
+
+.feature-card-warning .feature-card-header {
+    background: linear-gradient(135deg, #f6c23e 0%, #f6c23e 50%, #f8d55a 100%);
+}
+
+.feature-card-header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.35s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1) rotate(5deg);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.primary-icon {
+    color: #4e73df;
+}
+
+.success-icon {
+    color: #1cc88a;
+}
+
+.warning-icon {
+    color: #f6c23e;
+}
+
+.feature-card h5 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #212529;
+}
+
+.feature-card p {
+    font-size: 0.9rem;
+}
+
+/* =====================================================
+     HOMEPAGE SPECIFIC STYLES
+===================================================== */
+
+body { font-family: 'Poppins', system-ui, -apple-system, sans-serif; }
+
+.navbar-brand { font-size: 1.15rem; }
+
+.btn-primary { box-shadow: 0 8px 20px rgba(78,115,223,0.12); }
+
+.hero { padding: 80px 0; }
+
+.feature-card { border-radius: 14px; }
+.feature-icon { width: 68px; height: 68px; border-radius: 14px; display:flex; align-items:center; justify-content:center; margin:0 auto; box-shadow: 0 8px 20px rgba(33,37,41,0.04); }
+
+.course-card { border-radius: 12px; box-shadow: 0 8px 30px rgba(33,37,41,0.04); }
+.course-card .icon-circle { width:56px; height:56px; border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(78,115,223,0.06); }
+
+.counter { font-size: 28px; color: #224abe; }
+
+.feature-card, .course-card { transition: transform .25s ease, box-shadow .25s ease; }
+.feature-card:hover, .course-card:hover { transform: translateY(-8px); box-shadow: 0 20px 45px rgba(0,0,0,0.10); }
+
+.icon-circle i { font-size: 1.25rem; }
+
+.btn-outline-primary { border-radius: 10px; }
+
+/* CTA */
+section.py-5.text-white { border-radius: 8px; }
+
+/* Footer */
+footer a { color: inherit; }
+
+@media (max-width: 991px) {
+    .feature-card .feature-icon {
+        width: 56px;
+        height: 56px;
+    }
+}
+
+/* Fix: add selector */
+.text-muted {
+    color: #6c757d;
+    line-height: 1.5;
+}
+
+
+/* =====================================================
+   NOTIFICATION BELL STYLES
+===================================================== */
+
+.notification-bell {
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 8px 12px;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    overflow: visible;
+    position: relative;
+}
+
+.notification-bell:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+}
+
+.notification-bell:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.25);
+    color: #fff;
+}
+
+/* Pulsing badge animation */
+.badge-pulse {
+    animation: pulse 2s infinite;
+    font-size: 0.65rem;
+    padding: 3px 6px !important;
+    font-weight: 600;
+    min-width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 6px rgba(220, 53, 69, 0);
+    }
+}
+
+.notification-dropdown {
+    border: 1px solid #e3e6f0;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+.notification-dropdown .dropdown-header {
+    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+    color: #fff;
+    border: none;
+    padding: 16px 16px;
+    font-size: 0.95rem;
+}
+
+.notification-list {
+    max-height: 350px;
+    overflow-y: auto;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.notification-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.notification-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.notification-list::-webkit-scrollbar-thumb {
+    background: #d3d3d3;
+    border-radius: 10px;
+}
+
+.notification-item {
+    display: block;
+    transition: all 0.2s ease;
+    color: inherit !important;
+}
+
+.notification-item:hover {
+    background: #f8f9fa;
+}
+
+.notification-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background: #e7f0ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4e73df;
+    font-size: 1.2rem;
+}
+
+.notification-content {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===============================
+   CLEAN LOGIN PAGE CSS
+=============================== */
+
+.login-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Header */
+.login-page .welcome-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(102,126,234,0.95);
+    padding: 15px;
+    text-align: center;
+    z-index: 100;
+}
+
+.welcome-title {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Container */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 80px;
+}
+
+/* Branding */
+.login-branding {
+    color: white;
+    text-align: center;
+}
+
+.logo-circle-login {
+    width: 100px;
+    height: 100px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+}
+
+/* Card */
+.login-card {
+    width: 420px;
+    max-width: 95%;
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Header */
+.login-header h2 {
+    font-size: 1.5rem;
+}
+
+.login-header p {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+/* Form */
+.form-group-modern {
+    margin-bottom: 15px;
+}
+
+.form-group-modern label {
+    font-size: 0.85rem;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #667eea;
+}
+
+.form-control-modern {
+    width: 100%;
+    padding: 10px 10px 10px 35px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* Options */
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
+
+/* Button */
+.btn-login {
+    width: 100%;
+    padding: 10px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    background: #5a67d8;
+}
+
+/* Divider */
+.divider-section {
+    text-align: center;
+    margin: 15px 0;
+    font-size: 0.8rem;
+}
+
+/* Register */
+.register-link {
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+.register-link a {
+    color: #667eea;
+}
+
+/* Alerts */
+.alert-modern {
+    background: #f8f9fa;
+    padding: 8px;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .login-branding {
+        display: none;
+    }
+}
+
+/* =====================================================
+   DESKTOP & TABLET ENHANCEMENTS
+===================================================== */
+@media (min-width: 768px) {
+
+    body {
+        font-size: 16px;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    .container {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}
+
+/* =====================================================
+   ADMIN UPLOAD: FLASH & INLINE ERROR STYLES
+===================================================== */
+.flash-alert {
+    border-radius: 12px;
+    padding: 12px 14px;
+    box-shadow: 0 8px 22px rgba(33,37,41,0.06);
+}
+
+.flash-alert .alert-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.alert-success .alert-icon { background: rgba(28,200,138,0.12); color: var(--success); }
+.alert-danger .alert-icon  { background: rgba(220,53,69,0.08); color: #dc3545; }
+.alert-warning .alert-icon { background: rgba(246,194,62,0.09); color: var(--warning); }
+.alert-info .alert-icon    { background: rgba(78,115,223,0.08); color: var(--primary); }
+
+.flash-alert svg { display: block; }
+
+.file-info { font-style: italic; opacity: 0.9; }
+
+.inline-error {
+    background: rgba(220,53,69,0.06);
+    padding: 8px 10px;
+    border-radius: 10px;
+}
+
+/* Slightly tint close button for visibility */
+.btn-close {
+    filter: grayscale(40%);
+}
+

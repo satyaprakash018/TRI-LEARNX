@@ -1,0 +1,130 @@
+/* ===============================
+   CLEAN REGISTER UI (OPTIMIZED)
+=============================== */
+
+body.register-page {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+/* Center Layout */
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Smaller Card */
+.register-card {
+    width: 340px; /* reduced size */
+    background: #fff;
+    padding: 25px 22px; /* reduced padding */
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Header */
+.register-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.register-header p {
+    margin: 5px 0 15px;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+/* Form */
+.form-group-modern {
+    margin-bottom: 12px;
+}
+
+.form-group-modern label {
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+    display: block;
+}
+
+/* Input */
+.form-control-modern {
+    width: 100%;
+    padding: 9px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.form-control-modern:focus {
+    border-color: #667eea;
+    outline: none;
+}
+
+/* Row */
+.form-row {
+    display: flex;
+    gap: 8px;
+}
+
+/* Checkbox */
+.terms-checkbox {
+    font-size: 0.8rem;
+    margin: 10px 0;
+}
+
+/* Button */
+.btn-register {
+    width: 100%;
+    padding: 10px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.btn-register:hover {
+    background: #5a67d8;
+}
+
+/* Login Link */
+.login-link {
+    text-align: center;
+    font-size: 0.85rem;
+    margin-top: 10px;
+}
+
+.login-link a {
+    color: #667eea;
+    text-decoration: none;
+}
+
+/* Alert */
+.alert-modern {
+    font-size: 0.8rem;
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.alert-success {
+    background: #d4edda;
+}
+
+.alert-danger {
+    background: #f8d7da;
+}
+
+/* Mobile */
+@media (max-width: 400px) {
+    .register-card {
+        width: 90%;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+}

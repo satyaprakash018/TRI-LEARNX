@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | Study Portal</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="bg-light">
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/dashboard">
+            📚 TRI LEARNX
+        </a>
+
+        <div class="d-flex align-items-center">
+
+            <!-- 🔔 Notification Bell -->
+            <div class="dropdown me-3">
+                <button class="btn notification-bell position-relative"
+                        data-bs-toggle="dropdown"
+                        title="Notifications">
+                    <i class="bi bi-bell-fill"></i>
+
+                    {% if unread_count > 0 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge badge-pulse rounded-pill bg-danger">
+                        {{ unread_count }}
+                    </span>
+                    {% endif %}
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end notification-dropdown"
+                    style="width: 350px; max-height: 450px;">
+
+                    <div class="dropdown-header fw-bold d-flex align-items-center gap-2">
+                        <i class="bi bi-bell-fill text-primary"></i>
+                        <span>Notifications</span>
+                        {% if unread_count > 0 %}
+                        <span class="badge bg-danger ms-auto">{{ unread_count }} new</span>
+                        {% endif %}
+                    </div>
+                    <li><hr class="dropdown-divider my-1"></li>
+
+                    {% if notifications|length == 0 %}
+                        <li class="text-center text-muted p-4">
+                            <i class="bi bi-inbox fs-4 d-block mb-2"></i>
+                            <small>No notifications yet</small>
+                        </li>
+                    {% else %}
+                        <li class="notification-list">
+                            {% for n in notifications %}
+                            <a href="#" class="notification-item text-decoration-none">
+                                <div class="d-flex gap-3 p-3 border-bottom">
+                                    <div class="notification-icon">
+                                        <i class="bi bi-info-circle-fill"></i>
+                                    </div>
+                                    <div class="notification-content flex-grow-1">
+                                        <p class="mb-1 small text-dark">{{ n.message }}</p>
+                                        <small class="text-muted d-block">Just now</small>
+                                    </div>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <!-- USER DROPDOWN -->
+            <div class="dropdown">
+                <button class="btn btn-outline-light dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown">
+                    👤 {{ name }}
+                    {% if session.role == "admin" %}
+                        <span class="badge bg-warning text-dark ms-1">Admin</span>
+                    {% endif %}
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="/profile">🧑‍🎓 My Profile</a></li>
+                    <li><a class="dropdown-item" href="/activity">📜 My Activity</a></li>
+                    <li><a class="dropdown-item" href="/bookmarks">⭐ My Bookmarks</a></li>
+
+                    {% if session.role == "admin" %}
+                        <li><a class="dropdown-item" href="/admin/users">👥 Manage Users</a></li>
+                        <li><a class="dropdown-item" href="/admin/analytics">📊 Admin Analytics</a></li>
+                    {% endif %}
+
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+<!-- DASHBOARD CONTENT -->
+<div class="container mt-5">
+
+    <!-- WELCOME CARD -->
+    <div class="card welcome-card mb-5">
+        <div class="welcome-header">
+            <div>
+                <h2 class="mb-2">Welcome back, <span class="text-gradient">{{ name }}</span> 🎉</h2>
+                <p class="mb-0">Access previous year question papers, study materials, and video lectures from one place.</p>
+            </div>
+            {% if session.role == "admin" %}
+            <a href="/admin/upload" class="btn btn-warning btn-modern">
+                <i class="bi bi-cloud-arrow-up me-2"></i>Upload PDFs
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- FEATURE CARDS -->
+    <div class="row g-4 mb-5">
+
+        <!-- QUESTION PAPERS -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card feature-card feature-card-primary h-100">
+                <div class="feature-card-header">
+                    <div class="feature-icon primary-icon">
+                        <i class="bi bi-journal-text"></i>
+                    </div>
+                </div>
+                <div class="card-body text-center pt-4">
+                    <h5 class="fw-bold mb-2">Question Papers</h5>
+                    <p class="text-muted small mb-3">Browse and download previous year question papers.</p>
+
+                    {% if session.role == "admin" %}
+                    <div class="stats-box mb-3">
+                        <div class="stat-number counter text-primary">
+                            <span data-target="{{ total_question_papers }}">0</span>
+                        </div>
+                        <p class="text-muted small mb-0">Total Papers</p>
+                    </div>
+                    {% endif %}
+
+                    <a href="/question-papers" class="btn btn-primary btn-modern">
+                        <i class="bi bi-arrow-right me-1"></i>View All
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- STUDY MATERIALS -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card feature-card feature-card-success h-100">
+                <div class="feature-card-header">
+                    <div class="feature-icon success-icon">
+                        <i class="bi bi-file-earmark-pdf"></i>
+                    </div>
+                </div>
+                <div class="card-body text-center pt-4">
+                    <h5 class="fw-bold mb-2">Study Materials</h5>
+                    <p class="text-muted small mb-3">Access notes, PDFs, and reference documents.</p>
+
+                    {% if session.role == "admin" %}
+                    <div class="stats-box mb-3">
+                        <div class="stat-number counter text-success">
+                            <span data-target="{{ total_study_materials }}">0</span>
+                        </div>
+                        <p class="text-muted small mb-0">Total Materials</p>
+                    </div>
+                    {% endif %}
+
+                    <a href="/materials" class="btn btn-success btn-modern">
+                        <i class="bi bi-arrow-right me-1"></i>View All
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIDEO LECTURES -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card feature-card feature-card-warning h-100">
+                <div class="feature-card-header">
+                    <div class="feature-icon warning-icon">
+                        <i class="bi bi-play-circle"></i>
+                    </div>
+                </div>
+                <div class="card-body text-center pt-4">
+                    <h5 class="fw-bold mb-2">Video Lectures</h5>
+                    <p class="text-muted small mb-3">Watch subject-wise video lectures and tutorials.</p>
+
+                    {% if session.role == "admin" %}
+                    <div class="stats-box mb-3">
+                        <div class="stat-number counter text-warning">
+                            <span data-target="{{ total_videos }}">0</span>
+                        </div>
+                        <p class="text-muted small mb-0">Total Videos</p>
+                    </div>
+                    {% endif %}
+
+                    <a href="/videos" class="btn btn-warning btn-modern">
+                        <i class="bi bi-arrow-right me-1"></i>View All
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- RECENT UPLOADS -->
+    <div class="row mt-2 mb-5">
+        <div class="col-12">
+            <div class="card recent-uploads-card">
+                <div class="recent-uploads-header">
+                    <div>
+                        <h5 class="mb-1 fw-bold"><i class="bi bi-fire text-danger me-2"></i>Recently Uploaded</h5>
+                        <small class="text-muted">Latest study materials and question papers</small>
+                    </div>
+                </div>
+
+                <div class="recent-uploads-content">
+                    {% if recent_materials|length == 0 %}
+                        <div class="text-center py-5">
+                            <i class="bi bi-inbox fs-3 text-muted mb-3"></i>
+                            <p class="text-muted">No materials uploaded yet</p>
+                        </div>
+                    {% else %}
+                        <ul class="upload-list">
+                            {% for m in recent_materials %}
+                            <li class="upload-item">
+                                <div class="upload-item-left">
+                                    <div class="upload-file-icon">
+                                        {% if m.category == "question_paper" %}
+                                            <i class="bi bi-file-text text-primary"></i>
+                                        {% else %}
+                                            <i class="bi bi-file-pdf text-danger"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="upload-item-info">
+                                        <h6 class="mb-1">{{ m.title }}</h6>
+                                        <small class="text-muted d-block mb-2">{{ m.subject }}</small>
+                                        {% if m.category == "question_paper" %}
+                                            <span class="badge bg-primary-soft text-primary"><i class="bi bi-bookmark me-1"></i>Question Paper</span>
+                                        {% else %}
+                                            <span class="badge bg-success-soft text-success"><i class="bi bi-file me-1"></i>Study Material</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <a href="/material/{{ m.file_id }}"
+                                   class="btn btn-sm btn-modern btn-primary"
+                                   target="_blank">
+                                    <i class="bi bi-arrow-up-right me-1"></i>Open
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TIP -->
+    <div class="alert alert-info shadow-sm mt-5">
+        💡 <strong>Tip:</strong> Check the Question Papers section regularly for newly uploaded exam papers.
+    </div>
+
+</div>
+
+<!-- CHATBOT BUTTON -->
+<button id="chat-toggle" style="position:fixed;bottom:20px;right:20px;border:none;background:#4e73df;color:white;padding:12px 16px;border-radius:50%;">
+💬
+</button>
+
+<!-- CHATBOX -->
+<div id="chatbox" style="display:none;position:fixed;bottom:80px;right:20px;width:300px;background:white;border-radius:10px;box-shadow:0 5px 20px rgba(0,0,0,0.2);">
+
+    <div style="background:#4e73df;color:white;padding:10px;border-radius:10px 10px 0 0;">
+        Study Bot 🤖
+    </div>
+
+    <div id="chat-messages" style="height:250px;overflow-y:auto;padding:10px;"></div>
+
+    <div style="display:flex;">
+        <input id="chat-input" type="text" placeholder="Ask something..."
+               style="flex:1;border:none;padding:10px;">
+        <button onclick="sendMessage()" style="border:none;background:#4e73df;color:white;padding:10px;">➤</button>
+    </div>
+</div>
+
+<script>
+document.getElementById("chat-toggle").onclick = () => {
+    let box = document.getElementById("chatbox");
+    box.style.display = box.style.display === "none" ? "block" : "none";
+};
+
+function addMessage(text, sender) {
+    let msgDiv = document.getElementById("chat-messages");
+    let msg = document.createElement("div");
+
+    msg.style.margin = "5px";
+    msg.style.padding = "8px";
+    msg.style.borderRadius = "8px";
+    msg.style.background = sender === "user" ? "#d1e7dd" : "#f8d7da";
+
+    msg.innerText = text;
+    msgDiv.appendChild(msg);
+
+    msgDiv.scrollTop = msgDiv.scrollHeight;
+}
+
+function sendMessage() {
+    let input = document.getElementById("chat-input");
+    let message = input.value;
+
+    if (!message) return;
+
+    addMessage(message, "user");
+
+    fetch("/chatbot", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({message: message})
+    })
+    .then(res => res.json())
+    .then(data => {
+        addMessage(data.reply, "bot");
+    });
+
+    input.value = "";
+}
+</script>
+
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    © 2026 SPP Study Portal | Built for Students
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const counters = document.querySelectorAll('.counter span');
+    counters.forEach(counterSpan => {
+        const target = parseInt(counterSpan.getAttribute('data-target'));
+        let count = 0;
+        const updateCount = () => {
+            const increment = Math.ceil(target / 40);
+            if (count < target) {
+                count += increment;
+                counterSpan.innerText = count;
+                setTimeout(updateCount, 25);
+            } else {
+                counterSpan.innerText = target;
+            }
+        };
+        updateCount();
+    });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Upload | Study Portal</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="bg-light">
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark bg-dark shadow">
+    <div class="container">
+        <span class="navbar-brand">Admin Upload Panel</span>
+        <a href="/dashboard" class="btn btn-outline-light btn-sm">Dashboard</a>
+    </div>
+</nav>
+
+<div class="container mt-4 fade-in">
+
+    <!-- FLASH MESSAGES (styled) -->
+    <div id="flash-messages" class="mb-3" aria-live="polite" aria-atomic="true">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div id="flash-{{ loop.index }}" class="alert alert-{{ category }} alert-dismissible fade show flash-alert" role="alert">
+                        <div class="d-flex align-items-start">
+                            <div class="alert-icon me-3">
+                                {% if category == 'success' %}
+                                    <!-- check -->
+                                    <svg width="28" height="28" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 10.8L3.2 8l-.8.8L6 12.4l8-8-.8-.8L6 10.8z" fill="currentColor"/></svg>
+                                {% elif category == 'danger' or category == 'error' %}
+                                    <!-- x -->
+                                    <svg width="28" height="28" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.646 4.646l6.708 6.708-.707.708L3.94 5.354l.707-.708z" fill="currentColor"/><path d="M11.354 4.646l-.707-.708L3.94 10.354l.707.708 6.707-6.708z" fill="currentColor"/></svg>
+                                {% elif category == 'warning' %}
+                                    <!-- exclamation -->
+                                    <svg width="28" height="28" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.002 1a1 1 0 0 1 .996.9l.35 5.6a1 1 0 0 1-.996 1.1H7a1 1 0 0 1-.996-1.1L6.354 1.9A1 1 0 0 1 7.002 1z" fill="currentColor"/><path d="M7.002 12a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" fill="currentColor"/></svg>
+                                {% else %}
+                                    <!-- info -->
+                                    <svg width="28" height="28" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 4.5a.75.75 0 1 1 0 1.5A.75.75 0 0 1 8 5.5zM7 8.5h2v4H7v-4z" fill="currentColor"/></svg>
+                                {% endif %}
+                            </div>
+                            <div class="flex-grow-1">{{ message|safe }}</div>
+                            <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- TWO COLUMN LAYOUT -->
+    <div class="row g-4">
+
+        <!-- LEFT : STUDY MATERIAL -->
+        <div class="col-md-6">
+            <div class="card shadow p-4 admin-upload-card">
+
+                <h4 class="text-primary mb-2">📘 Study Material</h4>
+                <p class="text-muted small mb-3">
+                    Upload notes and reference PDFs.
+                </p>
+
+                <div class="admin-upload-form">
+                    <form action="/admin/upload_pdf" method="POST" enctype="multipart/form-data">
+
+                        <input type="hidden" name="category" value="study_material">
+
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text"
+                                   name="title"
+                                   class="form-control"
+                                   placeholder="DBMS Unit-1 Notes"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Subject</label>
+                            <input type="text"
+                                   name="subject"
+                                   class="form-control"
+                                   placeholder="DBMS"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">PDF File</label>
+                            <input type="file"
+                                   name="pdf"
+                                   accept="application/pdf"
+                                   class="form-control file-input"
+                                   data-maxsize="20971520"
+                                   required>
+                            <small class="text-muted">
+                                Only PDF • Max size: <strong>20 MB</strong>
+                            </small>
+                            <div class="file-info small text-muted mt-1"></div>
+                            <div class="inline-error text-danger small d-none mt-2"></div>
+                        </div>
+
+                        <button class="btn btn-primary w-100 mt-3">
+                            Upload Study Material
+                        </button>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- RIGHT : QUESTION PAPER -->
+        <div class="col-md-6">
+            <div class="card shadow p-4 admin-upload-card">
+
+                <h4 class="text-success mb-2">📄 Question Paper</h4>
+                <p class="text-muted small mb-3">
+                    Upload previous year exam papers.
+                </p>
+
+                <div class="admin-upload-form">
+                    <form action="/admin/upload_pdf" method="POST" enctype="multipart/form-data">
+
+                        <input type="hidden" name="category" value="question_paper">
+
+                        <div class="mb-3">
+                            <label class="form-label">Paper Title</label>
+                            <input type="text"
+                                   name="title"
+                                   class="form-control"
+                                   placeholder="DBMS End Sem 2023"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Subject</label>
+                            <input type="text"
+                                   name="subject"
+                                   class="form-control"
+                                   placeholder="DBMS"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Year</label>
+                            <select name="year" class="form-select" required>
+                                <option value="">Select</option>
+                                <option>2020</option>
+                                <option>2021</option>
+                                <option>2022</option>
+                                <option>2023</option>
+                                <option>2024</option>
+                                <option>2025</option>
+                                <option>2026</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Paper Type</label>
+                            <select name="paper_type" class="form-select" required>
+                                <option value="">Select</option>
+                                <option>Mid Semester</option>
+                                <option>End Semester</option>
+                                <option>Syllabus</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">PDF File</label>
+                            <input type="file"
+                                   name="pdf"
+                                   accept="application/pdf"
+                                   class="form-control file-input"
+                                   data-maxsize="20971520"
+                                   required>
+                            <small class="text-muted">
+                                Only PDF • Max size: <strong>20 MB</strong>
+                            </small>
+                            <div class="file-info small text-muted mt-1"></div>
+                            <div class="inline-error text-danger small d-none mt-2"></div>
+                        </div>
+
+                        <button class="btn btn-success w-100 mt-3">
+                            Upload Question Paper
+                        </button>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<footer class="bg-dark text-white text-center py-2 mt-4">
+    © 2026 Spp Study Portal
+</footer>
+
+</div>
+
+<!-- Bootstrap JS (for dismissible alerts) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Client-side file preview & size validation (no backend changes) -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const MAX = 20 * 1024 * 1024; // 20 MB
+    document.querySelectorAll('input.file-input[type=file]').forEach(function (input) {
+        const container = input.closest('.mb-3');
+        const info = container.querySelector('.file-info');
+        const err = container.querySelector('.inline-error');
+        const form = input.closest('form');
+        const submit = form ? form.querySelector('button[type=submit], button') : null;
+
+        input.addEventListener('change', function () {
+            err.classList.add('d-none');
+            if (!input.files || input.files.length === 0) {
+                info.textContent = '';
+                if (submit) submit.disabled = false;
+                return;
+            }
+            const f = input.files[0];
+            const sizeMb = (f.size / (1024 * 1024)).toFixed(2);
+            info.textContent = `${f.name} (${sizeMb} MB)`;
+            if (f.size > (input.dataset.maxsize ? parseInt(input.dataset.maxsize, 10) : MAX)) {
+                err.textContent = 'Selected file exceeds the 20 MB limit. Please choose a smaller file.';
+                err.classList.remove('d-none');
+                if (submit) submit.disabled = true;
+            } else {
+                if (submit) submit.disabled = false;
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>

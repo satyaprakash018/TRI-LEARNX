@@ -1,0 +1,102 @@
+:root{
+  --bg-1: #0f172a;
+  --bg-2: #071033;
+  --accent: #7c5cff;
+  --accent-2: #3de0c4;
+  --card-bg: rgba(255,255,255,0.06);
+  --glass: rgba(255,255,255,0.06);
+  --muted: rgba(255,255,255,0.7);
+}
+
+*{box-sizing:border-box}
+body.login-page{
+  margin:0;
+  font-family: Inter, 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial;
+    /* Use the provided background image directly (no overlay) to preserve brightness.
+      The image file used is `static/image/bg1.png`. */
+    background-image: url('../image/bg1.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* No overlay applied — preserve original image brightness as requested. */
+  color-scheme: dark;
+  min-height:100vh;
+  color: #e6eef8;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+.login-wrapper{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  padding:40px 24px;
+}
+
+.login-card{
+  width:420px;
+  max-width:96%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius:16px;
+  padding:28px 30px;
+  box-shadow: 0 10px 40px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  backdrop-filter: blur(8px) saturate(120%);
+}
+
+.brand{ text-align:center; margin-bottom:18px }
+.brand .logo{ width:56px; height:56px; object-fit:contain; display:block; margin:0 auto 8px }
+.brand h1{ margin:0; font-size:20px; letter-spacing:0.2px }
+.brand .lead{ margin:6px 0 0; color:var(--muted); font-size:13px }
+
+.flash-area{ margin-bottom:12px }
+.alert{ padding:10px 12px; border-radius:8px; font-size:13px }
+.alert-success{ background: rgba(50, 200, 160, 0.08); color:#bff0d8 }
+.alert-danger{ background: rgba(255,100,100,0.06); color:#ffd6d6 }
+
+.login-form{ display:block }
+.input-group{ margin-bottom:12px }
+.input-group label{ display:block; font-size:13px; color:var(--muted); margin-bottom:6px }
+.input-group input{
+  width:100%; padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02); color:var(--muted); font-size:15px; outline:none;
+  transition: all .18s ease;
+}
+.input-group input::placeholder{ color: rgba(230,238,248,0.45) }
+.input-group input:focus{ transform: translateY(-1px); box-shadow: 0 6px 20px rgba(124,92,255,0.12); border-color: rgba(124,92,255,0.85) }
+
+.form-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px }
+.remember{ font-size:13px; color:var(--muted) }
+.remember input{ margin-right:8px }
+.text-link{ color: #cbdcff; text-decoration:none; font-size:13px }
+
+.btn-primary{
+  display:block; width:100%; padding:12px 14px; border-radius:10px; border:none; cursor:pointer;
+  background: linear-gradient(90deg,var(--accent), var(--accent-2)); color:white; font-weight:600; font-size:15px;
+  box-shadow: 0 8px 24px rgba(124,92,255,0.16);
+}
+.btn-primary:hover{ transform: translateY(-2px) }
+
+.divider{ text-align:center; margin:16px 0; position:relative }
+.divider span{ background:transparent; color:rgba(230,238,248,0.7); font-size:13px; padding:0 10px }
+.divider:before{ content:''; height:1px; background:rgba(255,255,255,0.03); position:absolute; left:0; right:0; top:50%; transform:translateY(-50%) }
+
+.socials{ display:flex; gap:10px }
+.btn-social{ flex:1; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:var(--muted); cursor:pointer; font-weight:600 }
+.btn-google{ background: linear-gradient(90deg,#fff 0%, #f6f6f6 100%); color:#111 }
+.btn-github{ background: linear-gradient(90deg,#0b1220, #172033); color:#e6eef8 }
+
+.muted{ color:rgba(230,238,248,0.65); font-size:13px; text-align:center; margin-top:14px }
+.small{ font-size:13px }
+
+@media (max-width:520px){
+  .login-card{ padding:20px }
+  .brand h1{ font-size:18px }
+}
+
+/* For small devices avoid fixed background to improve performance */
+@media (max-width:768px){
+  body.login-page{ background-attachment: scroll }
+}

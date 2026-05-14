@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Analytics | Study Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            backdrop-filter: blur(10px);
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            transition: 0.4s;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-6px);
+        }
+
+        /* KPI Cards */
+        .kpi-card {
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            transition: 0.4s;
+        }
+
+        .kpi-card:hover {
+            transform: scale(1.05);
+        }
+
+        .kpi {
+            font-size: 2.2rem;
+            font-weight: bold;
+        }
+
+        .gradient-1 { background: linear-gradient(45deg,#00c6ff,#0072ff); }
+        .gradient-2 { background: linear-gradient(45deg,#f7971e,#ffd200); }
+        .gradient-3 { background: linear-gradient(45deg,#ff512f,#dd2476); }
+
+        .section-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- 🔥 PROFESSIONAL NAVBAR -->
+<nav class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container d-flex justify-content-between">
+        <span class="navbar-brand fw-bold">
+            📊 Admin Analytics Panel
+        </span>
+        <div>
+            <a href="/dashboard" class="btn btn-outline-light btn-sm me-2">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+            <a href="/logout" class="btn btn-danger btn-sm">
+                Logout
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+
+    <!-- KPI SECTION -->
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="kpi-card gradient-1">
+                <div class="kpi" id="usersCounter">0</div>
+                <p>Total Users</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="kpi-card gradient-2">
+                <div class="kpi" id="materialsCounter">0</div>
+                <p>Total Materials</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="kpi-card gradient-3">
+                <div class="kpi" id="downloadsCounter">0</div>
+                <p>Total Downloads</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CHART SECTION -->
+    <div class="row mt-5">
+
+        <div class="col-md-8">
+            <div class="glass-card">
+                <h5 class="section-title">📈 Platform Overview</h5>
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="glass-card">
+                <h6>🔥 Top Downloaded</h6>
+                <p class="text-info fw-bold">
+                    {{ top_material.title if top_material else "No data" }}
+                </p>
+
+                <hr class="text-light">
+
+                <h6>👤 Most Active User</h6>
+                <p class="text-warning fw-bold">
+                    {{ most_active_user if most_active_user else "No data" }}
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SECOND CHART ROW -->
+    <div class="row mt-5">
+
+        <div class="col-md-8">
+            <div class="glass-card">
+                <h5 class="section-title">📅 Last 7 Days Login Activity</h5>
+                <canvas id="loginChart"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="glass-card">
+                <h5 class="section-title">📊 Distribution</h5>
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- 🔥 ANIMATED COUNTERS -->
+<script>
+function animateValue(id, start, end, duration) {
+    let obj = document.getElementById(id);
+    let range = end - start;
+    let increment = range / 60;
+    let current = start;
+    let stepTime = duration / 60;
+
+    let timer = setInterval(function() {
+        current += increment;
+        obj.innerHTML = Math.floor(current);
+        if (current >= end) {
+            obj.innerHTML = end;
+            clearInterval(timer);
+        }
+    }, stepTime);
+}
+
+animateValue("usersCounter", 0, {{ total_users }}, 1200);
+animateValue("materialsCounter", 0, {{ total_materials }}, 1200);
+animateValue("downloadsCounter", 0, {{ total_downloads }}, 1200);
+</script>
+
+<!-- 🔥 CHARTS -->
+<script>
+
+// BAR CHART
+new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Users','Materials','Downloads'],
+        datasets: [{
+            data: [{{ total_users }}, {{ total_materials }}, {{ total_downloads }}],
+            backgroundColor: ['#00c6ff','#ffd200','#dd2476'],
+            borderRadius: 10
+        }]
+    },
+    options: {
+        plugins: { legend: { display: false } }
+    }
+});
+
+// LINE CHART
+new Chart(document.getElementById('loginChart'), {
+    type: 'line',
+    data: {
+        labels: {{ last_7_days | tojson }},
+        datasets: [{
+            label: 'Logins',
+            data: {{ login_counts | tojson }},
+            borderColor: '#00c6ff',
+            backgroundColor: 'rgba(0,198,255,0.2)',
+            tension: 0.4,
+            fill: true
+        }]
+    }
+});
+
+// DOUGHNUT CHART
+new Chart(document.getElementById('pieChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Users','Materials','Downloads'],
+        datasets: [{
+            data: [{{ total_users }}, {{ total_materials }}, {{ total_downloads }}],
+            backgroundColor: ['#00c6ff','#ffd200','#dd2476']
+        }]
+    }
+});
+
+// AUTO REFRESH EVERY 15s
+setInterval(function(){
+    location.reload();
+}, 15000);
+
+</script>
+
+</body>
+</html>

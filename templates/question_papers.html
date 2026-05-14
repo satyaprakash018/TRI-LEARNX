@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Previous Year Question Papers</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="bg-light">
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark bg-dark shadow">
+    <div class="container">
+        <a class="navbar-brand" href="/dashboard">📘 Question Papers</a>
+        <a href="/dashboard" class="btn btn-outline-light btn-sm">Dashboard</a>
+    </div>
+</nav>
+
+<div class="container mt-5 fade-in">
+
+    <h3 class="mb-3">📄 Previous Year Question Papers</h3>
+    <p class="text-muted">Filter by subject, year, or exam type.</p>
+
+    <!-- FILTER FORM -->
+    <form method="GET" action="/question-papers" class="mb-4">
+        <div class="row g-2">
+
+            <!-- SUBJECT -->
+            <div class="col-md-4">
+                <select name="subject" class="form-select">
+                    <option value="All">All Subjects</option>
+                    {% for sub in subjects %}
+                        <option value="{{ sub }}"
+                            {% if request.args.get('subject') == sub %}selected{% endif %}>
+                            {{ sub }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- YEAR -->
+            <div class="col-md-3">
+                <select name="year" class="form-select">
+                    <option value="All">All Years</option>
+                    {% for y in years %}
+                        <option value="{{ y }}"
+                            {% if request.args.get('year') == y %}selected{% endif %}>
+                            {{ y }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- PAPER TYPE -->
+            <div class="col-md-3">
+                <select name="paper_type" class="form-select">
+                    <option value="All">All Types</option>
+                    <option {% if request.args.get('paper_type') == 'Mid Semester' %}selected{% endif %}>Mid Semester</option>
+                    <option {% if request.args.get('paper_type') == 'End Semester' %}selected{% endif %}>End Semester</option>
+                    <option {% if request.args.get('paper_type') == 'Syllabus' %}selected{% endif %}>Syllabus</option>
+                </select>
+            </div>
+
+            <!-- BUTTON -->
+            <div class="col-md-2 d-grid">
+                <button class="btn btn-primary">Apply</button>
+            </div>
+
+        </div>
+    </form>
+
+    <!-- TABLE -->
+    {% if papers|length == 0 %}
+        <div class="alert alert-warning text-center">
+            No question papers found.
+        </div>
+    {% else %}
+        <div class="card shadow">
+            <div class="card-body">
+
+                <table class="table table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Subject</th>
+                            <th>Branch</th>
+                            <th>Year</th>
+                            <th>Type</th>
+                            <th>Downloads</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for p in papers %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ p.subject }}</td>
+                            <td>{{ p.title }}</td>
+                            <td>{{ p.year }}</td>
+                            <td>{{ p.paper_type }}</td>
+                            <td>
+                                <span class="badge bg-success">
+                                    {{ p.downloads }} Downloads
+                                </span>
+                            </td>
+                            <td>
+                                <a href="/preview/{{ p.file_id }}"
+                                   class="btn btn-info btn-sm">
+                                    Preview
+                                </a>
+
+                                <a href="/material/{{ p.file_id }}"
+                                   class="btn btn-success btn-sm"
+                                   download>
+                                    Download
+                                </a>
+
+                                {% if session.get("role") == "admin" %}
+                                    <a href="/admin/edit/{{ p._id }}"
+                                       class="btn btn-warning btn-sm">
+                                        Edit
+                                    </a>
+
+                                    <a href="/admin/delete/{{ p._id }}"
+                                       class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Delete this question paper?');">
+                                        Delete
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    © 2026 Spp Study Portal
+</footer>
+
+</body>
+</html>

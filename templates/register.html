@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register | Study Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- App CSS (use the main style so register matches index) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Login page styles (background + card) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+
+<body class="login-page">
+
+<!-- Background -->
+<div class="bg-elements">
+    <div class="element element-1"></div>
+    <div class="element element-2"></div>
+    <div class="element element-3"></div>
+</div>
+
+<!-- Header 
+<div class="welcome-header">
+    <div class="welcome-content">
+        <h1 class="welcome-title">
+            <i class="bi bi-stars"></i> TRIDENT STUDY PORTAL <i class="bi bi-stars"></i>
+        </h1>
+    </div>
+</div> -->
+
+<div class="login-container">
+    <div class="row h-100 align-items-center justify-content-center">
+
+        <!-- LEFT SIDE -->
+        <div class="col-lg-6 d-none d-lg-flex flex-column justify-content-center align-items-center">
+            <div class="login-branding text-center">
+                <h1 class="mt-4 fw-bold">TRI LEARNX</h1>
+                <p class="lead text-light mt-2">Excellence in Education</p>
+
+            </div>
+        </div> 
+
+        <!-- RIGHT SIDE -->
+        <div class="col-lg-6 col-md-8 col-sm-10">
+            <div class="login-card">
+
+                <!-- HEADER -->
+                <div class="login-header">
+                    <h2 class="fw-bold mb-2">
+                        <i class="bi bi-person-plus text-primary-light"></i>
+                        Create Account
+                    </h2>
+                    <p class="text-muted small">Join Study Portal</p>
+                </div>
+
+                <!-- FLASH -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert-modern alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% endwith %}
+
+                <!-- FORM -->
+                <form action="/register_user" method="POST" class="login-form">
+
+                    <!-- Full Name -->
+                    <div class="form-group-modern">
+                        <label>Full Name</label>
+                        <div class="input-wrapper">
+                            <i class="bi bi-person-fill"></i>
+                            <input type="text" name="name" class="form-control-modern" placeholder="Enter full name" required>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group-modern">
+                        <label>Email</label>
+                        <div class="input-wrapper">
+                            <i class="bi bi-envelope-fill"></i>
+                            <input type="email" name="email" class="form-control-modern" placeholder="Enter email" required>
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group-modern">
+                        <label>Password</label>
+                        <div class="input-wrapper">
+                            <i class="bi bi-lock-fill"></i>
+                            <input type="password" id="password" name="password" class="form-control-modern" placeholder="Enter password" required>
+                            <i class="bi bi-eye-fill toggle-password" onclick="togglePassword()"></i>
+                        </div>
+                    </div>
+
+                    <!-- College/Branch Row -->
+                    <div class="form-row">
+                        <div class="form-group-modern">
+                            <label>College</label>
+                            <div class="input-wrapper">
+                                <i class="bi bi-building"></i>
+                                <input type="text" name="college" class="form-control-modern" placeholder="College name">
+                            </div>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label>Branch</label>
+                            <div class="input-wrapper">
+                                <i class="bi bi-journal-bookmark"></i>
+                                <input type="text" name="branch" class="form-control-modern" placeholder="Branch">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Year -->
+                    <div class="form-group-modern">
+                        <label>Year</label>
+                        <div class="input-wrapper">
+                            <i class="bi bi-calendar3"></i>
+                            <input type="text" name="year" class="form-control-modern" placeholder="Year">
+                        </div>
+                    </div>
+
+                    <!-- Terms -->
+                    <div class="login-options">
+                        <label class="remember-me">
+                            <input type="checkbox" required>
+                            <span>I agree to Terms & Conditions</span>
+                        </label>
+                    </div>
+
+                    <!-- Button -->
+                    <button type="submit" class="btn-login">
+                        <span class="btn-text">Register</span>
+                        <i class="bi bi-arrow-right ms-2"></i>
+                    </button>
+
+                </form>
+
+                <!-- Divider -->
+                <div class="divider-section">
+                    <span>Already have an account?</span>
+                </div>
+
+                <!-- Back to Login -->
+                <div class="register-link">
+                    <p><a href="/" class="fw-bold">Sign In</a></p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+function togglePassword() {
+    let pass = document.getElementById("password");
+    pass.type = pass.type === "password" ? "text" : "password";
+}
+</script>
+
+</body>
+</html>
