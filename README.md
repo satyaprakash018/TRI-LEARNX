@@ -79,6 +79,10 @@ DATABASE_URL=your_database_url
 <img width="1341" height="610" alt="Screenshot 2026-05-10 120219" src="https://github.com/user-attachments/assets/c359f5cd-9b4f-4ce8-9763-da29ee5eb68a" />
 
 <img width="1330" height="572" alt="Screenshot 2026-05-04 202747" src="https://github.com/user-attachments/assets/afe002de-fcce-4c90-82a0-8dbb825388c6" />
+
+<img width="1272" height="608" alt="Screenshot 2026-05-10 120636" src="https://github.com/user-attachments/assets/8a33e18e-a183-4383-8f36-cd4165e4feb2" />
+<img width="1289" height="573" alt="Screenshot 2026-05-10 120743" src="https://github.com/user-attachments/assets/ec63c5b3-2846-420d-9648-f74944684a84" />
+<img width="1358" height="582" alt="Screenshot 2026-05-04 202655" src="https://github.com/user-attachments/assets/586a345a-1f32-4698-9389-6920fb924669" />
 ---
 
 ## 🎯 Future Enhancements
